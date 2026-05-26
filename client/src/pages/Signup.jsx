@@ -1,13 +1,14 @@
-import Input from '../components/Input'
 import { Link } from 'react-router-dom'
+import Input from '../components/Input'
 import Button from '../components/Button'
+
 function Signup() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6">
+    <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-black">
 
-      <div className="w-full max-w-md bg-zinc-900 p-8 rounded-2xl border border-zinc-800">
+      <div className="w-full max-w-md bg-zinc-900 p-8 rounded-2xl border border-zinc-800 shadow-lg">
 
-        <h1 className="text-3xl font-bold mb-2">
+        <h1 className="text-4xl font-bold mb-3">
           Create Account
         </h1>
 
@@ -15,7 +16,7 @@ function Signup() {
           Start practicing AI-powered interviews today.
         </p>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
 
           <Input
             type="text"
@@ -33,15 +34,16 @@ function Signup() {
           />
 
           <Button text="Signup" />
+
           <p className="text-sm text-zinc-400 text-center">
-  Already have an account?{' '}
-  <Link
-    to="/login"
-    className="text-blue-500 hover:underline"
-  >
-    Login
-  </Link>
-</p>
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="text-blue-500 hover:underline"
+            >
+              Login
+            </Link>
+          </p>
 
         </div>
 
