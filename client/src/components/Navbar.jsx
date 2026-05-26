@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-8 py-5 bg-zinc-900 border-b border-zinc-800">
+    <nav className="flex flex-col md:flex-row items-center justify-between px-6 md:px-8 py-5 gap-4 bg-zinc-900 border-b border-zinc-800">
       <h1 className="text-2xl font-bold text-blue-500">
         AI Interview
       </h1>

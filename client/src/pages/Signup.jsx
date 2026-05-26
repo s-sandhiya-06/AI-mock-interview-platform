@@ -1,5 +1,6 @@
 import Input from '../components/Input'
 import { Link } from 'react-router-dom'
+import Button from '../components/Button'
 function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
@@ -31,9 +32,7 @@ function Signup() {
             placeholder="Create a password"
           />
 
-          <button className="w-full bg-blue-600 hover:bg-blue-700 transition py-3 rounded-xl font-semibold">
-            Signup
-          </button>
+          <Button text="Signup" />
           <p className="text-sm text-zinc-400 text-center">
   Already have an account?{' '}
   <Link
