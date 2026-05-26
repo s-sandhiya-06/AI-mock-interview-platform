@@ -1,15 +1,31 @@
-function Timer() {
+// src/components/Timer.jsx
+
+import { useEffect, useState } from 'react'
+
+function Timer({ duration }) {
+  const [timeLeft, setTimeLeft] = useState(duration)
+
+  useEffect(() => {
+    setTimeLeft(duration)
+  }, [duration])
+
+  useEffect(() => {
+    if (timeLeft <= 0) return
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => prev - 1)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [timeLeft])
+
+  const minutes = Math.floor(timeLeft / 60)
+  const seconds = timeLeft % 60
+
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl px-5 py-3">
-
-      <p className="text-sm text-zinc-400">
-        Time Remaining
-      </p>
-
-      <h2 className="text-2xl font-bold text-blue-500">
-        14:32
-      </h2>
-
+    <div className="text-xl font-bold text-blue-400">
+      Timer: {String(minutes).padStart(2, '0')}:
+      {String(seconds).padStart(2, '0')}
     </div>
   )
 }

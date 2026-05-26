@@ -11,7 +11,6 @@ function App() {
   return (
     <div className="min-h-screen bg-black text-white">
   <Navbar />
-
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
@@ -22,5 +21,4 @@ function App() {
 </div>
   )
 }
-
 export default App
