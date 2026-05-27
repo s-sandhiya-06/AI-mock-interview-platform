@@ -1,8 +1,54 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import Button from '../components/Button'
 import StatCard from '../components/StatCard'
 
 function Dashboard() {
+
+  const [interviews, setInterviews] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+
+    fetchInterviews()
+
+  }, [])
+
+  const fetchInterviews = async () => {
+
+    try {
+
+      const response = await axios.get(
+        'http://localhost:5000/api/interview/all'
+      )
+
+      setInterviews(response.data)
+
+    } catch (error) {
+
+      console.log(error)
+
+    } finally {
+
+      setLoading(false)
+    }
+  }
+
+  const totalInterviews = interviews.length
+
+  const averageScore =
+  interviews.length > 0
+    ? Math.round(
+        interviews.reduce(
+          (acc, item) =>
+            acc + (item.score || 0),
+          0
+        ) / interviews.length
+      )
+    : 0
   return (
+
     <div className="min-h-screen bg-black text-white px-6 py-10">
 
       <div className="max-w-7xl mx-auto">
@@ -10,6 +56,7 @@ function Dashboard() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
           <div>
+
             <h1 className="text-4xl font-bold">
               Dashboard
             </h1>
@@ -17,10 +64,13 @@ function Dashboard() {
             <p className="text-zinc-400 mt-2">
               Track your interview preparation progress.
             </p>
+
           </div>
 
           <div className="w-full md:w-52">
+
             <Button text="Start Interview" />
+
           </div>
 
         </div>
@@ -29,17 +79,17 @@ function Dashboard() {
 
           <StatCard
             title="Total Interviews"
-            value="12"
+            value={totalInterviews}
           />
 
           <StatCard
             title="Average Score"
-            value="84%"
+            value={`${averageScore}%`}
           />
 
           <StatCard
-            title="Hours Practiced"
-            value="18h"
+            title="Recent Sessions"
+            value={interviews.length}
           />
 
         </div>
@@ -50,45 +100,66 @@ function Dashboard() {
             Recent Sessions
           </h2>
 
-          <div className="space-y-4">
+          {
+            loading ? (
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <p className="text-zinc-400">
+                Loading...
+              </p>
 
-              <div>
-                <h3 className="font-semibold text-lg">
-                  Frontend Developer Interview
-                </h3>
+            ) : interviews.length === 0 ? (
 
-                <p className="text-zinc-400 text-sm mt-1">
-                  Completed on May 22, 2026
-                </p>
+              <p className="text-zinc-400">
+                No interviews found
+              </p>
+
+            ) : (
+
+              <div className="space-y-4">
+
+                {
+                  interviews.map((item) => (
+
+                    <div
+                      key={item._id}
+                      className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:border-blue-500 transition-all"
+                    >
+
+                      <div>
+
+                        <h3 className="font-semibold text-lg">
+
+                          {item.title || 'Mock Interview'}
+
+                        </h3>
+
+                        <p className="text-zinc-400 text-sm mt-1">
+
+                          Completed on {' '}
+
+                          {
+                            new Date(
+                              item.date
+                            ).toLocaleDateString()
+                          }
+
+                        </p>
+
+                      </div>
+
+                      <div className="text-blue-500 font-bold text-xl">
+
+                        {item.score || 0}%
+
+                      </div>
+
+                    </div>
+                  ))
+                }
+
               </div>
-
-              <div className="text-blue-500 font-bold text-xl">
-                88%
-              </div>
-
-            </div>
-
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-
-              <div>
-                <h3 className="font-semibold text-lg">
-                  React Technical Round
-                </h3>
-
-                <p className="text-zinc-400 text-sm mt-1">
-                  Completed on May 20, 2026
-                </p>
-              </div>
-
-              <div className="text-blue-500 font-bold text-xl">
-                79%
-              </div>
-
-            </div>
-
-          </div>
+            )
+          }
 
         </div>
 

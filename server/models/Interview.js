@@ -1,22 +1,25 @@
 const mongoose = require('mongoose')
 
-const interviewSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true
-    },
+const interviewSchema = new mongoose.Schema({
 
-    answers: [
-      {
-        question: String,
-        answer: String
-      }
-    ]
+  title: {
+    type: String,
+    required: true
   },
-  {
-    timestamps: true
-  }
-)
 
-module.exports = mongoose.model('Interview', interviewSchema)
+  score: {
+    type: Number,
+    required: true
+  },
+
+  date: {
+    type: Date,
+    default: Date.now
+  }
+
+})
+
+module.exports = mongoose.model(
+  'Interview',
+  interviewSchema
+)

@@ -1,15 +1,18 @@
 const express = require('express')
+
 const router = express.Router()
 
 const Interview = require('../models/Interview')
 
 router.post('/save', async (req, res) => {
+
   try {
-    const { username, answers } = req.body
+
+    const { title, score } = req.body
 
     const newInterview = new Interview({
-      username,
-      answers
+      title,
+      score
     })
 
     await newInterview.save()
@@ -19,7 +22,25 @@ router.post('/save', async (req, res) => {
     })
 
   } catch (error) {
+
     console.log(error)
+
+    res.status(500).json({
+      message: 'Server Error'
+    })
+  }
+})
+
+router.get('/all', async (req, res) => {
+
+  try {
+
+    const interviews = await Interview.find()
+      .sort({ date: -1 })
+
+    res.json(interviews)
+
+  } catch (error) {
 
     res.status(500).json({
       message: 'Server Error'
