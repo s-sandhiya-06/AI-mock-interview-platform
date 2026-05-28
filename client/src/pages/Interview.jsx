@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import Timer from '../components/Timer'
 import questions from '../data/questions'
 
 function Interview() {
+  const navigate = useNavigate()
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answer, setAnswer] = useState('')
@@ -32,39 +34,49 @@ function Interview() {
   }
 
   // SUBMIT INTERVIEW
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
 
-    const finalAnswers = [
-      ...allAnswers,
-      {
-        question: questions[currentQuestion],
-        answer: answer
-      }
-    ]
-
-    try {
-
-      const response = await axios.post(
-        'http://localhost:5000/api/interview/save',
-        {
-          username: 'Sandy',
-          answers: finalAnswers
-        }
-      )
-
-      alert(response.data.message)
-
-      setSubmitted(true)
-
-      console.log(finalAnswers)
-
-    } catch (error) {
-
-      console.log(error)
-
-      alert('Error submitting interview')
+  const finalAnswers = [
+    ...allAnswers,
+    {
+      question: questions[currentQuestion],
+      answer: answer
     }
+  ]
+
+  const generatedScore =
+    Math.floor(Math.random() * 41) + 60
+
+  try {
+
+    const response = await axios.post(
+      'http://localhost:5000/api/interview/save',
+      {
+        title: 'Frontend Mock Interview',
+        score: generatedScore
+      }
+    )
+
+    alert(
+      `Interview Submitted!\nYour Score: ${generatedScore}%`
+    )
+
+    setSubmitted(true)
+    setTimeout(() => {
+
+  navigate('/dashboard')
+
+}, 1500)
+
+    console.log(finalAnswers)
+
+  } catch (error) {
+
+    console.log(error)
+
+    alert('Error submitting interview')
   }
+}
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-10">
@@ -129,7 +141,7 @@ function Interview() {
 
               <button
                 onClick={nextQuestion}
-                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl"
+                className="bg-blue-600 hover:bg-blue-700 hover:scale-105 transition-all duration-300 px-6 py-3 rounded-xl"
               >
                 Next Question
               </button>
