@@ -64,7 +64,11 @@ const handleSubmit = async () => {
     setSubmitted(true)
     setTimeout(() => {
 
-  navigate('/dashboard')
+  navigate('/result', {
+  state: {
+    score: generatedScore
+  }
+})
 
 }, 1500)
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 import Button from '../components/Button'
 import StatCard from '../components/StatCard'
 
 function Dashboard() {
+  const navigate = useNavigate()
 
   const [interviews, setInterviews] = useState([])
   const [loading, setLoading] = useState(true)
@@ -69,7 +71,10 @@ function Dashboard() {
 
           <div className="w-full md:w-52">
 
-            <Button text="Start Interview" />
+            <Button
+  text="Start Interview"
+  onClick={() => navigate('/interview')}
+/>
 
           </div>
 
